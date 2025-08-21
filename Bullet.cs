@@ -1,0 +1,37 @@
+using UnityEngine;
+
+public class Bullet : MonoBehaviour
+{
+    public float damage;
+    public int per;
+    Rigidbody2D rigid;
+
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
+    public void Init(float damage, int per, Vector3 dir)
+    {
+        this.damage = damage;
+        this.per = per;
+        if(per > -1)
+        {
+            rigid.velocity = dir;
+            
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Enemy")||per == 1)
+        {
+            return;
+        }
+        if(per == -1)
+        {
+            rigid.velocity = Vector2.zero; // 속도를 0으로 설정하여 멈춤
+            gameObject.SetActive(false);
+        }
+     
+    }
+}
